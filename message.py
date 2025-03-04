@@ -6,7 +6,7 @@ import logging
 import json
 from shared import TARGETED_USER_ADDRESSES, user_addresses_lock, USER_NICKNAMES
 from notifier import TelegramNotifier
-from binance import get_other_leaderboard_base_info  # Tambahkan impor ini
+from binance import get_other_leaderboard_base_info
 
 logger = logging.getLogger(__name__)
 
@@ -156,10 +156,10 @@ async def process_telegram_updates(session: aiohttp.ClientSession, notifier: Tel
                         if not user_addresses:
                             await notifier.send_message(session, "Daftar encryptedUid kosong.", str(chat_id))
                         else:
-                            message = "<b><u>📝 𝐃𝐚𝐟𝐭𝐚𝐫 𝐔𝐈𝐃:</u></b>\n\n"
+                            message = "📝 <b>𝐃𝐚𝐟𝐭𝐚𝐫 𝐔𝐈𝐃:</b>\n\n"
                             for i, addr in enumerate(user_addresses):
                                 nickname = USER_NICKNAMES.get(addr, addr)
-                                message += f"{i}. {nickname} ({addr})\n"
+                                message += f"{i}. {nickname} (<code>{addr}</code>)\n"
                             await notifier.send_message(session, message, str(chat_id))
                             logger.debug(f"Daftar UID yang dikirim: {user_addresses}")
 
