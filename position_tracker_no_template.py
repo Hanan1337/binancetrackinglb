@@ -82,33 +82,35 @@ class PositionTracker:
     async def _notify_new_position(self, session, symbol, row, encrypted_uid, notifier, user_nicknames):
         nickName = user_nicknames.get(encrypted_uid, encrypted_uid)
         pnl_emoji = Emoji.PROFIT if row['unrealized_pnl'] >= 0 else Emoji.LOSS
+        leverage = int(float(row['leverage']))  # Hapus desimal dari leverage
         message = (
             f"⚠️ 【<b>{nickName}</b>】\n"
-            f"❇️ New position opened\n"
-            f"Position: {symbol} {row['estimatedPosition']} {row['leverage']}X\n"
+            f"❇️ New position opened\n\n"
+            f"<u><b>Position: {symbol} {row['estimatedPosition']} {leverage}X</b></u>\n\n"
             f"Base currency - USDT\n"
-            f"━━━━━━━━━━━━━━━━━\n"
-            f"🎯 Entry Price: {row['entry_price']}\n"
-            f"💰 Est. Entry Size: {row['position_value']:.5f}\n"
-            f"{pnl_emoji} PnL: {row['unrealized_pnl']}\n"
-            f"━━━━━━━━━━━━━━━━━\n"
-            f"Last Update:\n"
+            f"━━━━━━━━━━━━━━━━\n"
+            f"🎯 <b>Entry Price:</b> {row['entry_price']}\n"
+            f"💰 <b>Est. Entry Size:</b> {row['position_value']:.5f}\n"
+            f"{pnl_emoji} <b>PnL:</b> {row['unrealized_pnl']}\n"
+            f"━━━━━━━━━━━━━━━━\n\n"
+            f"<b>Last Update:</b>\n"
             f"{row['updateTime']} (UTC+7)\n"
-            f"VIEW PROFILE ON BINANCE {self.account_info_url_template.format(encrypted_uid)}"
+            f"<b><a href='{self.account_info_url_template.format(encrypted_uid)}'>VIEW PROFILE ON BINANCE</a></b>"
         )
         await notifier.send_message(session, message)
 
     async def _notify_closed_position(self, session, symbol, row, encrypted_uid, notifier, user_nicknames):
         nickName = user_nicknames.get(encrypted_uid, encrypted_uid)
         current_price = await get_markprice(session, symbol)
+        leverage = int(float(row['leverage']))  # Hapus desimal dari leverage
         message = (
             f"⚠️ 【<b>{nickName}</b>】\n"
-            f"⛔️ Position closed\n"
-            f"Position: {symbol} {row['estimatedPosition']} {row['leverage']}X\n"
-            f"💵 Current Price: {current_price} USDT\n"
-            f"🕒 Last Update:\n"
+            f"⛔️ <u><b>Position closed</b></u>\n\n"
+            f"<b>Position:</b> {symbol} {row['estimatedPosition']} {leverage}X\n\n"
+            f"💵 <b>Current Price:</b> {current_price} USDT\n"
+            f"<b>Last Update:</b>\n"
             f"{row['updateTime']} (UTC+7)\n"
-            f"🔗 <a href='{self.account_info_url_template.format(encrypted_uid)}'>VIEW PROFILE ON BINANCE</a>"
+            f"<b><a href='{self.account_info_url_template.format(encrypted_uid)}'>VIEW PROFILE ON BINANCE</a></b>"
         )
         await notifier.send_message(session, message)
 
@@ -121,18 +123,19 @@ class PositionTracker:
         else:
             for symbol, row in position_result.iterrows():
                 pnl_emoji = Emoji.PROFIT if row['unrealized_pnl'] >= 0 else Emoji.LOSS
+                leverage = int(float(row['leverage']))  # Hapus desimal dari leverage
                 message = (
                     f"⚠️ 【<b>{nickName}</b>】\n"
-                    f"💎 Current positions:\n"
-                    f"Position: {symbol} {row['estimatedPosition']} {row['leverage']}X\n"
+                    f"💎 Current positions:\n\n"
+                    f"<b><u>Position: {symbol} {row['estimatedPosition']} {leverage}X</u></b>\n\n"
                     f"Base currency - USDT\n"
-                    f"━━━━━━━━━━━━━━━━━━\n"
-                    f"🎯 Entry Price: {row['entry_price']}\n"
-                    f"💰 Est. Entry Size: {row['position_value']:.5f}\n"
-                    f"{pnl_emoji} PnL: {row['unrealized_pnl']}\n"
-                    f"━━━━━━━━━━━━━━━━━━\n"
-                    f"Last Update:\n"
+                    f"━━━━━━━━━━━━━━━━━\n"
+                    f"🎯 <b>Entry Price:</b> {row['entry_price']}\n"
+                    f"💰 <b>Est. Entry Size:</b> {row['position_value']:.5f}\n"
+                    f"{pnl_emoji} <b>PnL:</b> {row['unrealized_pnl']}\n"
+                    f"━━━━━━━━━━━━━━━━━\n\n"
+                    f"<b>Last Update:</b>\n"
                     f"{row['updateTime']} (UTC+7)\n"
-                    f"VIEW PROFILE ON BINANCE ({self.account_info_url_template.format(encrypted_uid)})"
+                    f"<b><a href='{self.account_info_url_template.format(encrypted_uid)}'>VIEW PROFILE ON BINANCE</a></b>"
                 )
                 await notifier.send_message(session, message)
