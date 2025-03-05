@@ -1,4 +1,3 @@
-```markdown
 # Binance Leaderboard Tracker
 
 ## Deskripsi
