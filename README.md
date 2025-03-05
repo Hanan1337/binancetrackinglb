@@ -126,7 +126,7 @@ Kirim perintah ke bot Telegram Anda:
 
 ## Contoh Output di Telegram
 ```
-⚠️ 【<b>mason会发财</b>】
+⚠️ 【<b>Trader123</b>】
 💎 Current positions:
 
 <u><b>Position: ETHUSDT LONG 20X</b></u>
@@ -140,7 +140,7 @@ Base currency - USDT
 
 <b>Last Update:</b>
 2025-03-04 08:31:34
-<b><a href='https://www.binance.com/en/futures-activity/leaderboard/user/um?encryptedUid=782DDDD51145467F6B3C3844C4D9F78F'>VIEW PROFILE ON BINANCE</a></b>
+<b><a href='https://www.binance.com/en/futures-activity/leaderboard/user/um?encryptedUid=1234HSJKOS8VWIU283813UNFNF234'>VIEW PROFILE ON BINANCE</a></b>
 ```
 **Catatan:** Waktu ditampilkan apa adanya dari Binance (UTC) karena konversi ke UTC+7 dihapus.
 
